@@ -1,3 +1,5 @@
+use std::collections::BTreeMap;
+
 fn part1(input: &str) -> u32 {
     let instuct_string = input.split("\n\n").next().unwrap();
 
@@ -13,10 +15,6 @@ fn part1(input: &str) -> u32 {
             (id, (&first[1..], &last[..last.len() - 1]))
         })
         .collect::<BTreeMap<&str, (&str, &str)>>();
-
-    // for i in map.into_iter() {
-    //     println!("{} = ({}, {})", i.0, i.1 .0, i.1 .1);
-    // }
 
     let mut count: u32 = 0;
     let mut instruction_cursor: usize = 0;
