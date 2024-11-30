@@ -1,0 +1,11 @@
+use crate::utils::{add_day, prompt_add};
+
+pub fn run_day(year: &str, day: &str) {
+    match day {
+        // <DAY_ENTRY>
+        _ => {
+            prompt_add(year, day);
+            add_day(year, day);
+        }
+    }
+}
