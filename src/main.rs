@@ -22,6 +22,7 @@ fn main() {
 
     match year {
         // <YEAR_ENTRY>
+        "23" => y23::run_day(year, day),
         _ => {
             prompt_add(year, day);
             utils::add_year(year);
