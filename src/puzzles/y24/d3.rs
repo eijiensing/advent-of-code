@@ -133,7 +133,6 @@ mod tests {
         let expected = 161;
         assert_eq!(part1(input), expected);
     }
-
     #[test]
     // Year 2024 Day 3 Part 2
     fn y24d3p2() {
