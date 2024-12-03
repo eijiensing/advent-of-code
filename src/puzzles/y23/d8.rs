@@ -17,7 +17,6 @@ fn part1(input: &str) -> u32 {
         .collect::<BTreeMap<&str, (&str, &str)>>();
 
     let mut count: u32 = 0;
-    let mut instruction_cursor: usize = 0;
     let mut cursor = "AAA";
 
     while cursor != "ZZZ" {
@@ -37,7 +36,7 @@ fn part1(input: &str) -> u32 {
 }
 
 fn part2(input: &str) -> u32 {
-    0
+    input.chars().count() as u32
 }
 
 pub fn run() {
