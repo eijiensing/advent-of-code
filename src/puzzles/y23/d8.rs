@@ -36,7 +36,7 @@ fn part1(input: &str) -> u32 {
 }
 
 fn part2(input: &str) -> u32 {
-    0
+    input.chars().count() as u32
 }
 
 pub fn run() {
