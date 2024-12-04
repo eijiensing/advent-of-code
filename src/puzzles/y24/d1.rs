@@ -13,17 +13,7 @@ fn part1(input: &str) -> u32 {
     let sum_left: i32 = left_vec.iter().sum();
     let sum_right: i32 = right_vec.iter().sum();
     let xd = sum_left - sum_right;
-
-    //left_vec.sort();
-    //right_vec.sort();
-    //let mut count = 0;
-    //for i in 0..left_vec.len() {
-    //    // O(N^2)
-    //    let diff = (left_vec.get(i).unwrap() - right_vec.get(i).unwrap()).abs();
-    //    count += diff;
-    //}
-    //count as u32
-    xd.abs() as u32
+    xd.unsigned_abs()
 }
 
 fn part2(input: &str) -> u32 {

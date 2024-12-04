@@ -21,7 +21,7 @@ fn check(numbers: Vec<u32>) -> bool {
     let mut prev_num = nums_iter.next().unwrap();
     for num in nums_iter {
         let abs_diff = prev_num.abs_diff(*num);
-        if abs_diff < 1 || abs_diff > 3 {
+        if !(1..=3).contains(&abs_diff) {
             valid = false;
         }
         if is_ascending.is_none() {
@@ -33,7 +33,8 @@ fn check(numbers: Vec<u32>) -> bool {
         }
         if is_ascending.is_some_and(|x| x) && prev_num > num {
             valid = false;
-        } else if is_ascending.is_some_and(|x| !x) && prev_num < num {
+        }
+        if is_ascending.is_some_and(|x| !x) && prev_num < num {
             valid = false;
         }
         prev_num = num;
