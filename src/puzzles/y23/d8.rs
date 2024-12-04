@@ -52,8 +52,16 @@ mod tests {
     #[test]
     // Year 2023 Day 8 Part 1
     fn y23d8p1() {
-        let input = "";
-        let expected = 0;
+        let input = "RL
+
+AAA = (BBB, CCC)
+BBB = (DDD, EEE)
+CCC = (ZZZ, GGG)
+DDD = (DDD, DDD)
+EEE = (EEE, EEE)
+GGG = (GGG, GGG)
+ZZZ = (ZZZ, ZZZ)";
+        let expected = 2;
         assert_eq!(part1(input), expected);
     }
 
