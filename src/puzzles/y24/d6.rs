@@ -14,22 +14,15 @@ fn part1(input: &str) -> u32 {
         }
     }
     let mut guard_visited: HashSet<(i32, i32)> = HashSet::new();
-    println!("x {}", input.lines().next().unwrap().len() - 1);
-    println!("y {}", (input.lines().count() - 1) as i32);
-    println!("INITIAL POS {guard_position:?}");
-    guard_visited.insert(guard_position);
-    while guard_position.0 > 0
+    while guard_position.0 >= 0
         && guard_position.0 <= (input.lines().next().unwrap().len() - 1) as i32
-        && guard_position.1 > 0
+        && guard_position.1 >= 0
         && guard_position.1 <= (input.lines().count() - 1) as i32
     {
-        if walls
-            .get(&(
-                guard_position.0 + direction_xy.0,
-                guard_position.1 + direction_xy.1,
-            ))
-            .is_some()
-        {
+        if walls.contains(&(
+            guard_position.0 + direction_xy.0,
+            guard_position.1 + direction_xy.1,
+        )) {
             direction_xy = match direction_xy {
                 (0, -1) => (1, 0),
                 (1, 0) => (0, 1),
@@ -37,13 +30,12 @@ fn part1(input: &str) -> u32 {
                 _ => (0, -1),
             }
         }
+        guard_visited.insert(guard_position);
         guard_position.0 += direction_xy.0;
         guard_position.1 += direction_xy.1;
-        guard_visited.insert(guard_position);
-        println!("{guard_position:?} len: {}", guard_visited.len());
     }
 
-    guard_visited.len() as u32 - 1
+    guard_visited.len() as u32
 }
 
 fn part2(input: &str) -> u32 {
@@ -75,7 +67,7 @@ mod tests {
 .........#
 #.........
 ....^...#.";
-        let expected = 17;
+        let expected = 16;
         assert_eq!(part1(input), expected);
     }
 
