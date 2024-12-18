@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 fn part1(input: &str) -> u32 {
     let mut safe_count = 0;
     for line in input.lines() {
@@ -72,9 +74,14 @@ fn part2(input: &str) -> u32 {
 
 pub fn run() {
     let input = std::fs::read_to_string("inputs/y24/d2.txt").expect("Failed to read input file");
-
-    println!("Part 1: {}", part1(&input));
-    println!("Part 2: {}", part2(&input));
+    let part1_start = Instant::now();
+    let part1_result = part1(&input);
+    let part1_duration = part1_start.elapsed().as_micros();
+    let part2_start = Instant::now();
+    let part2_result = part2(&input);
+    let part2_duration = part2_start.elapsed().as_micros();
+    println!("Part 1: {} in {}μs", part1_result, part1_duration);
+    println!("Part 2: {} in {}μs", part2_result, part2_duration);
 }
 
 #[cfg(test)]

@@ -135,9 +135,11 @@ pub fn run() {
     let part1_start = Instant::now();
     let part1_result = part1(&input);
     let part1_duration = part1_start.elapsed().as_micros();
-
+    let part2_start = Instant::now();
+    let part2_result = part2(&input);
+    let part2_duration = part2_start.elapsed().as_micros();
     println!("Part 1: {} in {}μs", part1_result, part1_duration);
-    println!("Part 2: {}", part2(&input));
+    println!("Part 2: {} in {}μs", part2_result, part2_duration);
 }
 
 #[cfg(test)]
