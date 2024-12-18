@@ -1,7 +1,4 @@
-use std::{
-    collections::{HashMap, HashSet},
-    time::Instant,
-};
+use std::time::Instant;
 
 fn check_horizontal(line: &str) -> u32 {
     line.as_bytes()
@@ -49,30 +46,33 @@ fn check_xmas(
     next_line: &str,
     next_next_line: &str,
     next_next_next_line: &str,
-) -> Vec<usize> {
-    let mut correct_indexes_in_third: Vec<usize> = vec![];
+) -> u32 {
+    let mut correct = 0;
     let search = if reversed { "SAMX" } else { "XMAS" };
     if check_char(next_line, index, search, 1)
         && check_char(next_next_line, index, search, 2)
         && check_char(next_next_next_line, index, search, 3)
     {
-        correct_indexes_in_third.push(index);
-    }
-    if index > 2
-        && check_char(next_line, index - 1, search, 1)
-        && check_char(next_next_line, index - 2, search, 2)
-        && check_char(next_next_next_line, index - 3, search, 3)
-    {
-        correct_indexes_in_third.push(index - 3);
+        // check down
+        correct += 1;
     }
     if next_line.len() - index > 3
         && check_char(next_line, index + 1, search, 1)
         && check_char(next_next_line, index + 2, search, 2)
         && check_char(next_next_next_line, index + 3, search, 3)
     {
-        correct_indexes_in_third.push(index + 3);
+        // check bottom right
+        correct += 1;
     }
-    correct_indexes_in_third
+    if index > 2
+        && check_char(next_line, index - 1, search, 1)
+        && check_char(next_next_line, index - 2, search, 2)
+        && check_char(next_next_next_line, index - 3, search, 3)
+    {
+        // check bottom left
+        correct += 1
+    }
+    correct
 }
 
 fn part1(input: &str) -> u32 {
@@ -80,17 +80,11 @@ fn part1(input: &str) -> u32 {
     let mut third_previous_line: Option<&str> = None;
     let mut second_previous_line: Option<&str> = None;
     let mut first_previous_line: Option<&str> = None;
-    let mut checked_lines: HashMap<usize, HashSet<usize>> = HashMap::new();
-    for (line_index, line) in input.lines().enumerate() {
-        checked_lines.entry(line_index).or_default(); // make sure line index always exists
+    for line in input.lines() {
         appearances += check_horizontal(line);
         if let Some(third) = third_previous_line {
             for (index, character) in third.chars().enumerate() {
-                if (character == 'S' || character == 'X')
-                    && checked_lines
-                        .get(&line_index)
-                        .is_some_and(|set| set.get(&index).is_none())
-                {
+                if character == 'S' || character == 'X' {
                     let reversed = character == 'S';
                     let result = check_xmas(
                         index,
@@ -99,12 +93,7 @@ fn part1(input: &str) -> u32 {
                         first_previous_line.unwrap(),
                         line,
                     );
-                    checked_lines
-                        .entry(line_index)
-                        .and_modify(|current_checked| {
-                            current_checked.insert(index);
-                        });
-                    appearances += result.len() as u32;
+                    appearances += result;
                 }
             }
         }
@@ -131,7 +120,7 @@ fn part2(input: &str) -> u32 {
                         first_previous_line.unwrap(),
                         line,
                     );
-                    appearances += result
+                    appearances += result;
                 }
             }
         }
@@ -174,6 +163,30 @@ MXMXAXMASX";
     #[test]
     fn y24d4p1right() {
         let input = "XMAS";
+        let expected = 1;
+        assert_eq!(part1(input), expected);
+    }
+    #[test]
+    fn y24d4p1rightreversed() {
+        let input = "SAMX";
+        let expected = 1;
+        assert_eq!(part1(input), expected);
+    }
+    #[test]
+    fn y24d4p1bottomright() {
+        let input = "X...
+.M..
+..A.
+...S";
+        let expected = 1;
+        assert_eq!(part1(input), expected);
+    }
+    #[test]
+    fn y24d4p1bottomleft() {
+        let input = "...X
+..M.
+.A..
+S...";
         let expected = 1;
         assert_eq!(part1(input), expected);
     }
